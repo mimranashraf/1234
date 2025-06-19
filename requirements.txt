@@ -6,3 +6,7 @@ prophet
 matplotlib
 yfinance
 openpyxl
+opencv-python-headless==4.9.0.80
+numpy==1.26.4
+pillow==10.3.0
+streamlit==1.33.0
