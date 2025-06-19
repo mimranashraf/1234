@@ -10,3 +10,30 @@ opencv-python-headless==4.9.0.80
 numpy==1.26.4
 pillow==10.3.0
 streamlit==1.33.0
+import streamlit as st
+from PIL import Image, ImageFilter
+import numpy as np
+
+def cartoon_effect(image):
+    # Convert to grayscale
+    gray = image.convert('L')
+    
+    # Apply edge enhancement
+    edges = gray.filter(ImageFilter.FIND_EDGES)
+    
+    # Reduce colors
+    quantized = image.quantize(colors=8)
+    
+    # Combine edges with quantized image
+    cartoon = Image.blend(quantized.convert('RGB'), edges.convert('RGB'), alpha=0.3)
+    
+    return cartoon
+
+uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png"])
+
+if uploaded_file is not None:
+    image = Image.open(uploaded_file)
+    st.image(image, caption="Original Image", use_column_width=True)
+    
+    cartoon = cartoon_effect(image)
+    st.image(cartoon, caption="Cartoon Effect", use_column_width=True)
